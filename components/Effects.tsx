@@ -57,7 +57,14 @@ export default function Effects({ celebrating }: EffectsProps) {
       { label: "💗", left: "88%", top: "14%", delay: 0.6 },
       { label: "🫶", left: "12%", top: "72%", delay: 1.2 },
       { label: "🌙", left: "83%", top: "68%", delay: 0.3 },
-      { label: "🌸", left: "52%", top: "6%", delay: 0.9 }
+      { label: "🌸", left: "52%", top: "6%", delay: 0.9 },
+      { label: "🐱", left: "3%", top: "42%", delay: 0.4 },
+      { label: "😻", left: "92%", top: "38%", delay: 1.0 },
+      { label: "🐾", left: "45%", top: "88%", delay: 0.7 },
+      { label: "🐈", left: "78%", top: "82%", delay: 1.5 },
+      { label: "💌", left: "22%", top: "92%", delay: 0.2 },
+      { label: "🧸", left: "68%", top: "5%", delay: 1.3 },
+      { label: "🎀", left: "35%", top: "48%", delay: 0.8 },
     ],
     []
   );
@@ -76,7 +83,7 @@ export default function Effects({ celebrating }: EffectsProps) {
               className="absolute text-lg"
               style={{ color: `hsl(${item.hue} 96% 76%)` }}
             >
-              💗
+              {Math.random() > 0.7 ? "🐱" : "💗"}
             </motion.div>
           ))}
         </AnimatePresence>
@@ -95,19 +102,44 @@ export default function Effects({ celebrating }: EffectsProps) {
         </AnimatePresence>
 
         {celebrating && (
-          <motion.div
-            className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,177,222,0.24),transparent_45%)]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0.1, 0.38, 0.14] }}
-            transition={{ duration: 1.8, repeat: Infinity }}
-          />
+          <>
+            <motion.div
+              className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,177,222,0.24),transparent_45%)]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0.1, 0.38, 0.14] }}
+              transition={{ duration: 1.8, repeat: Infinity }}
+            />
+            {/* Celebration cat stickers burst */}
+            {Array.from({ length: 20 }, (_, i) => (
+              <motion.div
+                key={`celeb-cat-${i}`}
+                className="absolute text-3xl"
+                initial={{
+                  x: window.innerWidth / 2,
+                  y: window.innerHeight / 2,
+                  scale: 0,
+                  opacity: 1,
+                }}
+                animate={{
+                  x: window.innerWidth / 2 + (Math.random() - 0.5) * window.innerWidth,
+                  y: window.innerHeight / 2 + (Math.random() - 0.5) * window.innerHeight,
+                  scale: [0, 1.5, 0],
+                  opacity: [1, 1, 0],
+                  rotate: Math.random() * 720 - 360,
+                }}
+                transition={{ duration: 2 + Math.random(), delay: i * 0.1, ease: "easeOut" }}
+              >
+                {["😻", "💖", "🐱", "💕", "🎉", "✨", "🐾", "💗", "🌟", "🥰"][i % 10]}
+              </motion.div>
+            ))}
+          </>
         )}
       </div>
 
       <div className="pointer-events-none fixed inset-0 z-30">
         {floatingStickers.map((sticker) => (
           <motion.div
-            key={sticker.label}
+            key={sticker.label + sticker.left}
             className="absolute text-2xl md:text-3xl drop-shadow-[0_0_16px_rgba(255,255,255,0.18)]"
             style={{ left: sticker.left, top: sticker.top }}
             animate={{ y: [0, -12, 0], rotate: [0, 6, 0] }}
