@@ -14,7 +14,7 @@ import { useAudioAnalyzer } from "@/hooks/useAudioAnalyzer";
 type Stage = "initial" | "message1" | "catPrompt" | "game" | "final";
 
 export default function YesExperience() {
-  const [playMusic, setPlayMusic] = useState(false);
+  const [playMusic, setPlayMusic] = useState(true); // Set to true immediately to avoid browser block
   const [isMuted, setIsMuted] = useState(false);
   const [stage, setStage] = useState<Stage>("initial");
   
@@ -22,21 +22,21 @@ export default function YesExperience() {
   const { intensity, isPlaying } = useAudioAnalyzer("/music/love.mp3", playMusic, isMuted);
 
   useEffect(() => {
-    // Start music slightly after component mounts to allow for initial fade
-    const timer = setTimeout(() => {
-      setPlayMusic(true);
-    }, 1500);
-    
     // Show first message after the blur transition
     const msgTimer = setTimeout(() => {
       setStage("message1");
-    }, 4000);
+    }, 2500);
 
     return () => {
-      clearTimeout(timer);
       clearTimeout(msgTimer);
     };
   }, []);
+
+  const handleSkip = () => {
+    if (stage === "initial" || stage === "message1") setStage("catPrompt");
+    else if (stage === "catPrompt") setStage("game");
+    else if (stage === "game") setStage("final");
+  };
 
   // Intensity-based glow
   const backgroundStyle = {
@@ -80,7 +80,7 @@ export default function YesExperience() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
             transition={{ duration: 2.5, ease: "easeOut" }}
-            className="z-10 flex flex-col items-center p-8 backdrop-blur-[2px]"
+            className="z-10 flex flex-col items-center p-8 backdrop-blur-[2px] w-full max-h-screen overflow-y-auto"
           >
             <LoveMessage onComplete={() => setStage("catPrompt")} />
             
@@ -128,6 +128,21 @@ export default function YesExperience() {
           </motion.div>
         ))}
       </div>
+
+      {/* Skip Button */}
+      {stage !== "final" && (
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          onClick={handleSkip}
+          className="fixed bottom-6 left-6 z-50 flex items-center justify-center gap-1 rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm text-white/60 backdrop-blur-xl transition-all hover:bg-white/10 hover:text-white/90"
+        >
+          Skip
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </motion.button>
+      )}
 
       {/* Custom Music Controls */}
       <MusicPlayer 
