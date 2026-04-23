@@ -1,5 +1,26 @@
 # Romantic Heart Tree
 
+<!-- Banner Image -->
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./docs/banner-dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="./docs/banner-light.png">
+    <img alt="Romantic 3D Love Experience Banner" src="./docs/banner-light.png" width="100%">
+  </picture>
+</div>
+
+<br />
+
+<!-- UI Preview Image -->
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./docs/preview-dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="./docs/preview-light.png">
+    <img alt="App UI Preview" src="./docs/preview-light.png" width="80%">
+  </picture>
+</div>
+
+
 A dreamy, interactive romantic website built with Next.js, React, Tailwind CSS, Three.js (via React Three Fiber), and Framer Motion.
 
 ## What is included
