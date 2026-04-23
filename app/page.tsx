@@ -8,6 +8,8 @@ import ProposalScene from "@/components/ProposalScene";
 import Effects from "@/components/Effects";
 import { introLines, midLines } from "@/lib/messages";
 
+import YesExperience from "@/components/YesExperience";
+
 const scenes = ["intro", "mid", "proposal"] as const;
 type Scene = (typeof scenes)[number];
 
@@ -18,13 +20,15 @@ export default function Page() {
 
   const handleYes = () => {
     setCelebrating(true);
-    setTreeBurstSeed((v) => v + 1);
-    window.setTimeout(() => setCelebrating(false), 4600);
   };
 
   const handleTreeClick = () => {
     setTreeBurstSeed((v) => v + 1);
   };
+
+  if (celebrating) {
+    return <YesExperience />;
+  }
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-romantic-gradient">
@@ -180,29 +184,6 @@ export default function Page() {
           </motion.div>
         </div>
       </section>
-
-      {celebrating && (
-        <motion.div
-          className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black/25 px-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-        >
-          <motion.div
-            initial={{ scale: 0.82, y: 18, opacity: 0 }}
-            animate={{ scale: 1, y: 0, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 120, damping: 14 }}
-            className="soft-panel romantic-glow max-w-xl rounded-[2rem] px-6 py-8 text-center md:px-10"
-          >
-            <div className="text-5xl">💖</div>
-            <h3 className="mt-4 text-2xl font-semibold md:text-4xl">A yes that feels like a little star going off.</h3>
-            <p className="mt-4 text-lg leading-8 text-white/85 md:text-xl">
-              You just made my heart do something illegal ❤️
-              <br />
-              I promise I&apos;ll make that yes worth it.
-            </p>
-          </motion.div>
-        </motion.div>
-      )}
     </main>
   );
 }
