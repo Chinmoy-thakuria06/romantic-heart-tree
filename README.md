@@ -2,7 +2,7 @@
 <div align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./docs/banner-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="./docs/banner-light.png">
+    <source media="(prefers-color-scheme: light)" srcset="./docs/banner-">
     <img alt="Romantic 3D Love Experience Banner" src="./docs/banner-light.png" width="100%">
   </picture>
 </div>
