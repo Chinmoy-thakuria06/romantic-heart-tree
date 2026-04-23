@@ -25,7 +25,7 @@ export default function HeartCollectorGame({ onWin }: { onWin: () => void }) {
     // Generate initial hearts positioned randomly across the screen
     const initialHearts = ZERIN_TRAITS.map((trait, index) => ({
       id: index,
-      x: 10 + Math.random() * 80, // percentage
+      x: 15 + Math.random() * 70, // Keep them away from horizontal edges
       y: 15 + Math.random() * 70, // percentage
       text: trait,
       collected: false
@@ -66,7 +66,7 @@ export default function HeartCollectorGame({ onWin }: { onWin: () => void }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.9 }}
             transition={{ duration: 0.8 }}
-            className="absolute top-28 left-1/2 -translate-x-1/2 text-2xl md:text-4xl font-serif text-pink-200 drop-shadow-[0_0_15px_rgba(255,183,213,0.8)] text-center w-full px-4"
+            className="absolute top-24 left-1/2 -translate-x-1/2 text-2xl md:text-4xl font-serif text-pink-200 drop-shadow-[0_0_15px_rgba(255,183,213,0.8)] text-center w-[90vw] max-w-lg break-words leading-tight"
           >
             {revealedText}
           </motion.div>

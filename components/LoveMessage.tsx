@@ -26,10 +26,10 @@ export default function LoveMessage({ onComplete }: { onComplete?: () => void })
         clearInterval(timer);
         setIsTyping(false);
         if (onComplete) {
-          setTimeout(onComplete, 3000); // Give user 3s to read before triggering next step
+          setTimeout(onComplete, 4500); // Give user 4.5s to read before triggering next step
         }
       }
-    }, 45); // Adjust typing speed here
+    }, 70); // Adjusted typing speed for better sync with music
 
     return () => clearInterval(timer);
   }, [onComplete]);

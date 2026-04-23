@@ -26,7 +26,7 @@ export default function CatPrompt({ onStartGame }: CatPromptProps) {
           className="h-32 w-32 overflow-hidden rounded-full border-4 border-pink-300/30 shadow-[0_0_30px_rgba(255,183,213,0.4)]"
         >
           <img
-            src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif"
+            src="https://media1.tenor.com/m/0A0I-r2KqKMAAAAC/cat-cute.gif"
             alt="Cozy Cat"
             className="h-full w-full object-cover"
           />

@@ -60,18 +60,18 @@ export const yesLines = [
   "I promise I'll make that yes worth it."
 ];
 
-// Cat GIF URLs from giphy CDN (reliable)
+// Cat GIF URLs from tenor CDN (highly reliable for hotlinking)
 export const catGifUrls = [
-  "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",
-  "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif",
-  "https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif",
-  "https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif",
-  "https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif",
-  "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
-  "https://media.giphy.com/media/BEob5qhfT9HHy/giphy.gif",
-  "https://media.giphy.com/media/nR4L10XlJcSeQ/giphy.gif",
-  "https://media.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif",
-  "https://media.giphy.com/media/11s7Ke7jcNxCHS/giphy.gif",
+  "https://media1.tenor.com/m/0A0I-r2KqKMAAAAC/cat-cute.gif",
+  "https://media1.tenor.com/m/ZhlA2F_JqjQAAAAC/peach-cat.gif",
+  "https://media1.tenor.com/m/Y65xYqI9q0cAAAAC/cat-sad.gif",
+  "https://media1.tenor.com/m/UvP1Z1u0J2AAAAAC/crying-cat.gif",
+  "https://media1.tenor.com/m/hP4z8m2b1vQAAAAC/peach-goma.gif",
+  "https://media1.tenor.com/m/fXj83_lD8zYAAAAC/tkthao219-bubududu.gif",
+  "https://media1.tenor.com/m/sP58wJqQ9gAAAAAC/cat-crying.gif",
+  "https://media1.tenor.com/m/w5u7d8eA0aEAAAAC/goma-peach.gif",
+  "https://media1.tenor.com/m/0A0I-r2KqKMAAAAC/cat-cute.gif",
+  "https://media1.tenor.com/m/ZhlA2F_JqjQAAAAC/peach-cat.gif",
 ];
 
 // Love quiz questions — every answer leads to "aww"
