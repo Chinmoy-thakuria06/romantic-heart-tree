@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useState } from "react";
 import AnimatedText from "@/components/AnimatedText";
 import HeartTree from "@/components/HeartTree";
 import ProposalScene from "@/components/ProposalScene";
@@ -16,39 +16,6 @@ export default function Page() {
   const [treeBurstSeed, setTreeBurstSeed] = useState(0);
   const [celebrating, setCelebrating] = useState(false);
 
-  const introRef = useRef<HTMLDivElement | null>(null);
-  const midRef = useRef<HTMLDivElement | null>(null);
-  const proposalRef = useRef<HTMLDivElement | null>(null);
-
-  const sceneRefs = useMemo(
-    () => ({ intro: introRef, mid: midRef, proposal: proposalRef }),
-    []
-  );
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (!visible) return;
-        const id = visible.target.getAttribute("data-scene") as Scene | null;
-        if (id && scenes.includes(id)) setScene(id);
-      },
-      { threshold: [0.2, 0.35, 0.55, 0.75] }
-    );
-
-    [introRef.current, midRef.current, proposalRef.current].forEach((node) => {
-      if (node) observer.observe(node);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const scrollTo = (target: Scene) => {
-    sceneRefs[target].current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
   const handleYes = () => {
     setCelebrating(true);
     setTreeBurstSeed((v) => v + 1);
@@ -60,7 +27,7 @@ export default function Page() {
   };
 
   return (
-    <main className="cursor-none relative min-h-screen overflow-hidden bg-romantic-gradient">
+    <main className="relative min-h-screen overflow-hidden bg-romantic-gradient">
       <Effects celebrating={celebrating} />
 
       <div className="fixed inset-0 -z-0 opacity-40">
@@ -74,12 +41,11 @@ export default function Page() {
               {scene === "intro" && (
                 <motion.div
                   key="intro"
-                  ref={introRef}
-                  data-scene="intro"
                   className="soft-panel romantic-glow rounded-[2rem] p-6 md:p-8"
                   initial={{ opacity: 0, y: 18 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.5 }}
                 >
                   <p className="mb-3 text-xs tracking-[0.35em] text-white/55 uppercase">A little note from my heart</p>
                   <div className="space-y-3 text-xl leading-9 md:text-2xl">
@@ -87,24 +53,25 @@ export default function Page() {
                       <AnimatedText key={line} text={line} speed={24} className="text-white/92" />
                     ))}
                   </div>
-                  <button
-                    onClick={() => scrollTo("mid")}
+                  <motion.button
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.97 }}
+                    onClick={() => setScene("mid")}
                     className="mt-8 rounded-full border border-white/15 bg-white/10 px-5 py-3 text-sm font-medium text-white/90 transition hover:bg-white/15"
                   >
-                    Continue the story ↓
-                  </button>
+                    Continue the story →
+                  </motion.button>
                 </motion.div>
               )}
 
               {scene === "mid" && (
                 <motion.div
                   key="mid"
-                  ref={midRef}
-                  data-scene="mid"
                   className="soft-panel romantic-glow rounded-[2rem] p-6 md:p-8"
                   initial={{ opacity: 0, y: 18 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.5 }}
                 >
                   <p className="mb-3 text-xs tracking-[0.35em] text-white/55 uppercase">Somewhere between calm and magic</p>
                   <div className="space-y-3 text-xl leading-9 md:text-2xl">
@@ -113,18 +80,22 @@ export default function Page() {
                     ))}
                   </div>
                   <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                    <button
-                      onClick={() => scrollTo("proposal")}
+                    <motion.button
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => setScene("proposal")}
                       className="rounded-full border border-white/15 bg-white/10 px-5 py-3 text-sm font-medium text-white/90 transition hover:bg-white/15"
                     >
-                      Show me the last line ↓
-                    </button>
-                    <button
-                      onClick={() => scrollTo("intro")}
+                      Show me the last line →
+                    </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => setScene("intro")}
                       className="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-medium text-white/70 transition hover:bg-white/10"
                     >
                       Back to the beginning
-                    </button>
+                    </motion.button>
                   </div>
                 </motion.div>
               )}
@@ -132,11 +103,10 @@ export default function Page() {
               {scene === "proposal" && (
                 <motion.div
                   key="proposal"
-                  ref={proposalRef}
-                  data-scene="proposal"
                   initial={{ opacity: 0, y: 18 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.5 }}
                 >
                   <ProposalScene onYes={handleYes} onNotSure={() => handleTreeClick()} />
                 </motion.div>
@@ -165,7 +135,7 @@ export default function Page() {
 
             <div className="mt-4 grid grid-cols-2 gap-3 text-sm text-white/75">
               <div className="soft-panel rounded-2xl px-4 py-3">Click the tree for a heart burst</div>
-              <div className="soft-panel rounded-2xl px-4 py-3">Scroll for the story</div>
+              <div className="soft-panel rounded-2xl px-4 py-3">Click to reveal the story</div>
             </div>
           </div>
         </div>
@@ -193,7 +163,7 @@ export default function Page() {
           >
             <p className="mb-2 text-xs tracking-[0.3em] text-white/55 uppercase">Playful behavior</p>
             <p className="text-white/85 leading-7">
-              The “Not sure” path stays kind and respectful. It gives a gentle nudge, then lets the user decide without trapping them.
+              The "Not sure" path stays kind and respectful. It gives a gentle nudge, then lets the user decide without trapping them.
             </p>
           </motion.div>
 
@@ -228,7 +198,7 @@ export default function Page() {
             <p className="mt-4 text-lg leading-8 text-white/85 md:text-xl">
               You just made my heart do something illegal ❤️
               <br />
-              I promise I’ll make that yes worth it.
+              I promise I&apos;ll make that yes worth it.
             </p>
           </motion.div>
         </motion.div>
