@@ -16,16 +16,7 @@
 
 <br />
 
-<!-- UI Preview Image -->
-<div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./docs/preview-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="./docs/preview-light.png">
-    <img alt="App UI Preview" src="./docs/preview-light.png" width="80%">
-  </picture>
-</div>
 
-<br />
 
 ## ✨ Features
 
