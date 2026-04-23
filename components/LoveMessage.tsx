@@ -13,7 +13,7 @@ I promise to cherish this yes, to make you smile when you're tired, and to alway
 
 Thank you for choosing me. 💖`;
 
-export default function LoveMessage() {
+export default function LoveMessage({ onComplete }: { onComplete?: () => void }) {
   const [displayed, setDisplayed] = useState("");
   const [isTyping, setIsTyping] = useState(true);
 
@@ -25,11 +25,14 @@ export default function LoveMessage() {
       if (index >= MESSAGE.length) {
         clearInterval(timer);
         setIsTyping(false);
+        if (onComplete) {
+          setTimeout(onComplete, 3000); // Give user 3s to read before triggering next step
+        }
       }
     }, 45); // Adjust typing speed here
 
     return () => clearInterval(timer);
-  }, []);
+  }, [onComplete]);
 
   return (
     <div className="mx-auto w-full max-w-2xl text-center px-4">

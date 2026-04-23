@@ -6,12 +6,17 @@ import { useState, useEffect } from "react";
 import SakuraParticles from "./SakuraParticles";
 import LoveMessage from "./LoveMessage";
 import MusicPlayer from "./MusicPlayer";
+import CatPrompt from "./CatPrompt";
+import HeartCollectorGame from "./HeartCollectorGame";
+import FinalLoveMessage from "./FinalLoveMessage";
 import { useAudioAnalyzer } from "@/hooks/useAudioAnalyzer";
+
+type Stage = "initial" | "message1" | "catPrompt" | "game" | "final";
 
 export default function YesExperience() {
   const [playMusic, setPlayMusic] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
+  const [stage, setStage] = useState<Stage>("initial");
   
   // Audio handling
   const { intensity, isPlaying } = useAudioAnalyzer("/music/love.mp3", playMusic, isMuted);
@@ -22,9 +27,9 @@ export default function YesExperience() {
       setPlayMusic(true);
     }, 1500);
     
-    // Show message after the blur transition
+    // Show first message after the blur transition
     const msgTimer = setTimeout(() => {
-      setShowMessage(true);
+      setStage("message1");
     }, 4000);
 
     return () => {
@@ -66,17 +71,33 @@ export default function YesExperience() {
         </Canvas>
       </div>
 
-      {/* Cinematic Content */}
-      <AnimatePresence>
-        {showMessage && (
+      {/* Cinematic Content Flow */}
+      <AnimatePresence mode="wait">
+        {(stage === "message1" || stage === "catPrompt") && (
           <motion.div
+            key="message-phase"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
             transition={{ duration: 2.5, ease: "easeOut" }}
             className="z-10 flex flex-col items-center p-8 backdrop-blur-[2px]"
           >
-            <LoveMessage />
+            <LoveMessage onComplete={() => setStage("catPrompt")} />
+            
+            <AnimatePresence>
+              {stage === "catPrompt" && (
+                <CatPrompt onStartGame={() => setStage("game")} />
+              )}
+            </AnimatePresence>
           </motion.div>
+        )}
+
+        {stage === "game" && (
+          <HeartCollectorGame key="game-phase" onWin={() => setStage("final")} />
+        )}
+
+        {stage === "final" && (
+          <FinalLoveMessage key="final-phase" />
         )}
       </AnimatePresence>
 
